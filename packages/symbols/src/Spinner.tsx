@@ -1,20 +1,21 @@
 import classNames from "classnames";
 import styles from "./public/css/Spinner.module.css";
+import type { IconSizeKey } from "./sizes";
 
-export interface LoadingIconProps extends React.HTMLAttributes<HTMLDivElement> {
-    size?: "extraSmall" | "small" | "medium" | "large" | "extraLarge";
+export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+    size?: IconSizeKey;
     variant?: "scaleOut" | "dots" | "spinner";
     ref?: React.Ref<HTMLDivElement>;
 }
 
-export function LoadingIcon({
+export function Spinner({
     size = "medium",
     variant = "dots",
     className,
     ...restProps
-}: LoadingIconProps) {
+}: SpinnerProps) {
     const joinedClassNames = classNames(
-        styles.loadingIcon,
+        styles.spinner,
         styles[size],
         styles[variant],
         className
