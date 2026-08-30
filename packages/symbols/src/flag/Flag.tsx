@@ -3,11 +3,13 @@ import * as Flags from "./flags";
 import type { FlagCode } from "./types";
 
 interface FlagProps extends React.SVGProps<SVGSVGElement> {
-  code: FlagCode;
+  code?: FlagCode;
 }
 
 export const Flag = ({ code, ...props }: FlagProps) => {
-  const componentName = `${code.toUpperCase().split("-").join("")}Flag`;
+  const componentName = code
+    ? `${code.toUpperCase().split("-").join("")}Flag`
+    : "UNFlag";
 
   const SelectedFlag = (Flags as any)[componentName];
 
@@ -20,4 +22,3 @@ export const Flag = ({ code, ...props }: FlagProps) => {
 
   return <SelectedFlag {...props} />;
 };
-
