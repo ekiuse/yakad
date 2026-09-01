@@ -3,12 +3,13 @@ import * as Flags from "./flags";
 import type { FlagCode } from "./types";
 import { IconSizeKey, resolveIconSize } from "../sizes";
 
-interface FlagProps extends React.SVGProps<SVGSVGElement> {
+interface FlagProps extends React.HTMLAttributes<HTMLSpanElement> {
   code?: FlagCode;
   size?: number | IconSizeKey;
+  svgProps?: React.SVGProps<SVGSVGElement>;
 }
 
-export const Flag = ({ code, size, style, ...props }: FlagProps) => {
+export const Flag = ({ code, size, style, svgProps, ...restProps }: FlagProps) => {
   const componentName = code
     ? `${code.toUpperCase().split("-").join("")}Flag`
     : "UNFlag";
@@ -22,12 +23,22 @@ export const Flag = ({ code, size, style, ...props }: FlagProps) => {
     return null;
   }
 
-  const sizeProps = size
-    ? {
-      width: resolveIconSize(size),
-      height: resolveIconSize(size),
-    }
-    : {};
+  const pxSize = size ? resolveIconSize(size) : undefined;
 
-  return <SelectedFlag {...sizeProps} style={style} {...props} />;
+  return (
+    <span
+      {...restProps}
+      style={{
+        display: "inline-flex",
+        width: pxSize,
+        height: pxSize,
+        ...style,
+      }}
+    >
+      <SelectedFlag
+        {...svgProps}
+        style={{ width: "100%", height: "100%", ...svgProps?.style }}
+      />
+    </span>
+  );
 };
