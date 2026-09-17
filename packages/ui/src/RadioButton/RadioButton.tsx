@@ -1,7 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { Symbol } from "@yakad/symbols";
+import { Material } from "@yakad/symbols";
 import { Button } from "..";
 import styles from "./RadioButton.module.css";
 
@@ -52,7 +52,7 @@ export function RadioButton({
             )}
             <Button
                 icon={
-                    <Symbol
+                    <Material
                         icon={
                             dataFromRadioGroup?.checked
                                 ? "radio_button_checked"

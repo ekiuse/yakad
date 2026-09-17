@@ -11,7 +11,6 @@ export * from "./GridContainer/GridContainer";
 export * from "./GridItem/GridItem";
 export * from "./Card/Card"; // Stack Based
 // Theme & Styling
-export * from "./Theme/Theme"; // Stack Based
 export * from "./Spacer/Spacer";
 export * from "./Hr/Hr";
 // UI Components
@@ -19,13 +18,11 @@ export * from "./List/List";
 export * from "./ListItem/ListItem";
 export * from "./Table/Table";
 export * from "./Button/Button";
-export * from "./LoadingIcon/LoadingIcon";
 export * from "./SvgIcon/SvgIcon";
 export * from "./Text/Text";
 // Form Components
 export * from "./Form/Form";
-export * from "./InputField/InputField";
-export * from "./Select/Select";
+export * from "./Input/Input";
 export * from "./CheckBox/CheckBox";
 export * from "./CodeField/CodeField";
 export * from "./RadioGroup/RadioGroup";

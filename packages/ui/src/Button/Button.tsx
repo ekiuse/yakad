@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { LoadingIcon } from "..";
+import { Spinner } from "@yakad/symbols";
 import boxingStyles from "../boxing.module.css";
 import styles from "./Button.module.css";
 
@@ -8,14 +8,14 @@ export interface ButtonProps
     fullWidthOnParentDemand?: boolean;
     size?: "small" | "medium" | "large";
     variant?:
-        | "text"
-        | "outlined"
-        | "filled"
-        | "filledtonal"
-        | "tonal"
-        | "elevated"
-        | "link"
-        | "fab";
+    | "text"
+    | "outlined"
+    | "filled"
+    | "filledtonal"
+    | "tonal"
+    | "elevated"
+    | "link"
+    | "fab";
     borderStyle?: "none" | "semi" | "squircle" | "rounded";
     icon?: React.ReactNode;
     iconPosition?: "start" | "end";
@@ -62,7 +62,7 @@ export function Button({
                         [styles.positionCenter]: isloadingPositionCenter,
                     })}
                 >
-                    <LoadingIcon size={size} variant={loadingVariant} />
+                    <Spinner size={size} variant={loadingVariant} />
                 </div>
             )}
             {icon}

@@ -2,7 +2,7 @@
 
 import { useEffect, useImperativeHandle } from "react";
 import classNames from "classnames";
-import { Symbol } from "@yakad/symbols";
+import { Material } from "@yakad/symbols";
 import {
     Button,
     Card,
@@ -66,7 +66,7 @@ export function Popup({
                     <Spacer />
                     <Button
                         title="Close"
-                        icon={<Symbol icon="close" />}
+                        icon={<Material icon="close" />}
                         onClick={onClose}
                     />
                 </Row>

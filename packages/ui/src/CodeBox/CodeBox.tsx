@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Symbol } from "@yakad/symbols";
+import { Material } from "@yakad/symbols";
 import { Button, Card } from "..";
 import boxingStyles from "../boxing.module.css";
 import styles from "./CodeBox.module.css";
@@ -26,7 +26,7 @@ export function CodeBox({
     return (
         <Card {...restProps} className={joinedClassNames}>
             <pre>{children}</pre>
-            {copyButton && <Button icon={<Symbol icon="copy_all" />} />}
+            {copyButton && <Button icon={<Material icon="copy_all" />} />}
         </Card>
     );
 }

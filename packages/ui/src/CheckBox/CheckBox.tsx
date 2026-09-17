@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Symbol } from "@yakad/symbols";
+import { Material } from "@yakad/symbols";
 import boxingStyles from "../boxing.module.css";
 import styles from "./CheckBox.module.css";
 
@@ -29,8 +29,8 @@ export function CheckBox({
             {label}
             <input {...restProps} className={styles.input} type="checkbox" />
             <div className={styles.symbolContainer}>
-                <Symbol className={styles.symbolChecked} icon={"check_box"} />
-                <Symbol
+                <Material className={styles.symbolChecked} icon={"check_box"} />
+                <Material
                     className={styles.symbolUnChecked}
                     icon={"check_box_outline_blank"}
                 />

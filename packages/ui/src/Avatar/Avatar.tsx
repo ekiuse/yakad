@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./Avatar.module.css";
-import { Symbol } from "@yakad/symbols";
+import { Material } from "@yakad/symbols";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     src?: string;
@@ -18,7 +18,7 @@ export function Avatar({ src, className, ...restProps }: AvatarProps) {
             style={src ? { backgroundImage: `url(${src})` } : {}}
         >
             <div className={styles.editOverlay}>
-                <Symbol icon="edit" />
+                <Material icon="edit" />
             </div>
         </div>
     );
