@@ -57,5 +57,10 @@
     "bugs": {
         "url": "https://github.com/natiq-foundation/yakad/issues"
     },
-    "homepage": "https://yakad.natiq.net"
+    "homepage": "https://yakad.natiq.net",
+    "dependencies": {
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "tailwind-merge": "^3.6.0"
+    }
 }
