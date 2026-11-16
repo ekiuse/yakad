@@ -1,3 +1,4 @@
+
 export const stateTokens = {
     hover: {
         opacity: 0.08,
@@ -14,8 +15,13 @@ export const stateTokens = {
     disabled: {
         stateLayerOpacity: 0,
         contentOpacity: 0.38,
+        containerOpacity: 0.12,
     },
 } as const;
 
 export type StateTokens = typeof stateTokens;
-export type InteractiveState = keyof StateTokens;
+
+export type InteractiveState = Exclude<
+    keyof StateTokens,
+    "disabled"
+>;

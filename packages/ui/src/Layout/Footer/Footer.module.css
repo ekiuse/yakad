@@ -1,0 +1,102 @@
+.footer {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: var(--yakad-spacing-large) var(--yakad-spacing-medium);
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container);
+    transition:
+        transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+    z-index: 1;
+}
+
+.footer[data-position="sticky"] {
+    position: sticky;
+    bottom: 0;
+}
+
+.footer[data-position="fixed"] {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+}
+
+.footer[data-hidden="true"] {
+    transform: translateY(100%);
+}
+
+.footer[data-blur="true"] {
+    background-color: color-mix(in srgb,
+            var(--md-sys-color-surface-container) 90%,
+            transparent);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer[data-align="start"] .content {
+    align-items: flex-start;
+}
+
+.footer[data-align="center"] .content {
+    align-items: center;
+}
+
+.footer[data-align="end"] .content {
+    align-items: flex-end;
+}
+
+.footer[data-align="stretch"] .content {
+    align-items: stretch;
+}
+
+.footer[data-align="baseline"] .content {
+    align-items: baseline;
+}
+
+.footer[data-justify="start"] .content {
+    justify-content: flex-start;
+}
+
+.footer[data-justify="center"] .content {
+    justify-content: center;
+}
+
+.footer[data-justify="end"] .content {
+    justify-content: flex-end;
+}
+
+.footer[data-justify="between"] .content {
+    justify-content: space-between;
+}
+
+.footer[data-justify="around"] .content {
+    justify-content: space-around;
+}
+
+.footer[data-justify="evenly"] .content {
+    justify-content: space-evenly;
+}
+
+.footer[data-wrap="true"] .content {
+    flex-wrap: wrap;
+}
+
+.footer[data-wrap="false"] .content {
+    flex-wrap: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer {
+        transition: none;
+    }
+}

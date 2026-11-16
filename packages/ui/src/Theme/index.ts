@@ -1,4 +1,3 @@
-
 export {
     ThemeProvider,
     useTheme,
@@ -12,13 +11,23 @@ export type {
 } from "./ThemeProvider";
 
 export {
+    themeTokens,
+} from "./theme";
+
+export type {
+    ThemeTokens,
+} from "./theme";
+
+export {
     typographyTokens,
+    typefaceTokens,
 } from "./typography";
 
 export type {
     TypographyTokens,
     TypographyRole,
     TypographySize,
+    TypefaceToken,
 } from "./typography";
 
 export {
@@ -40,13 +49,17 @@ export type {
 } from "./elevation";
 
 export {
+    motionScheme,
     motionTokens,
 } from "./motion";
 
+
+
 export type {
+    MotionScheme,
     MotionTokens,
-    MotionDuration,
-    MotionEasing,
+    MotionSpeed,
+    MotionProperty,
 } from "./motion";
 
 export {
@@ -67,3 +80,47 @@ export type {
     SpacingToken,
     BreakpointToken,
 } from "./layout";
+
+export {
+    sourceColor,
+    sourceHct,
+    colorSpecVersion,
+    colorPlatform,
+    colorContrastLevel,
+    lightScheme,
+    darkScheme,
+    colorRoleNames,
+    getColorRoles,
+    lightColorRoles,
+    darkColorRoles,
+    createColorTokens,
+} from "./color";
+
+export type {
+    ColorRole,
+    ColorRoles,
+} from "./color";
+
+export {
+    buttonTokens,
+    buttonSizeTokens,
+    buttonVariantTokens,
+    textFieldTokens,
+    filledTextFieldTokens,
+    outlinedTextFieldTokens,
+    appBarTokens,
+    cardTokens,
+} from "./component";
+
+export type {
+    ButtonTokens,
+    ButtonSize,
+    ButtonVariant,
+    ButtonShape,
+    TextFieldTokens,
+    TextFieldVariant,
+    AppBarTokens,
+    CardTokens,
+    CardVariant,
+} from "./component";
+

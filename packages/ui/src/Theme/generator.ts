@@ -1,34 +1,20 @@
-
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { typographyTokens } from "./typography/tokens";
-import { shapeTokens } from "./shape/tokens";
-import { elevationTokens } from "./elevation/tokens";
-import { motionTokens } from "./motion/tokens";
-import { stateTokens } from "./state/tokens";
-import { layoutTokens } from "./layout/tokens";
+import { themeTokens } from "./theme";
+import { createCssRule, flattenTokens, type CssVariables } from "./utils/css";
+import { typographyTokens, typefaceTokens } from "./typography/tokens";
 
-function toKebabCase(value: string): string {
-    return value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
-}
-
-function createVariables(
-    tokens: Record<string, string | number>
-): string {
-    return Object.entries(tokens)
-        .map(([name, value]) => `    ${name}: ${value};`)
-        .join("\n");
-}
-
-function createTypographyVariables(): string {
-    const variables: Record<string, string | number> = {
-        "--yakad-font-family": "Roboto, sans-serif",
+function createTypographyVariables(): CssVariables {
+    const variables: CssVariables = {
+        "--md-ref-typeface-brand": typefaceTokens.brand,
+        "--md-ref-typeface-plain": typefaceTokens.plain,
     };
 
     for (const [role, sizes] of Object.entries(typographyTokens)) {
         for (const [size, properties] of Object.entries(sizes)) {
             const prefix = `--md-sys-typescale-${role}-${size}`;
 
+            variables[`${prefix}-font`] = `var(--md-ref-typeface-${properties.fontFamily})`;
             variables[`${prefix}-size`] = properties.fontSize;
             variables[`${prefix}-line-height`] = properties.lineHeight;
             variables[`${prefix}-weight`] = properties.fontWeight;
@@ -36,101 +22,75 @@ function createTypographyVariables(): string {
         }
     }
 
-    return createVariables(variables);
+    return variables;
 }
 
-function createShapeVariables(): string {
-    const variables: Record<string, string | number> = {};
 
-    for (const [name, value] of Object.entries(shapeTokens)) {
-        variables[`--md-sys-shape-corner-${toKebabCase(name)}`] = value;
-    }
+export function createThemeVariables(): CssVariables {
+    const variables: CssVariables = {
+        ...createTypographyVariables(),
+        ...flattenTokens(themeTokens.shape, "--md-sys-shape-corner"),
+        ...Object.fromEntries(
+            Object.entries(themeTokens.elevation).map(([level, token]) => [
+                `--md-sys-elevation-${level}`,
+                token.shadow,
+            ])
+        ),
+        ...Object.fromEntries(
+            Object.entries(themeTokens.elevation).map(([level, token]) => [
+                `--yakad-elevation-${level}-value`,
+                token.value,
+            ])
+        ),
+        ...flattenTokens(themeTokens.motion, "--yakad-motion"),
+        ...flattenTokens(themeTokens.state, "--md-sys-state"),
+        ...flattenTokens(themeTokens.layout.spacing, "--yakad-spacing"),
+        ...flattenTokens(themeTokens.layout.breakpoint, "--yakad-breakpoint"),
+        ...flattenTokens(
+            themeTokens.component.button,
+            "--md-comp-button"
+        ),
+        ...flattenTokens(
+            themeTokens.component.textField,
+            "--md-comp-text-field"
+        ),
+        ...flattenTokens(
+            themeTokens.component.appBar,
+            "--md-comp-top-app-bar"
+        ),
 
-    return createVariables(variables);
+        ...flattenTokens(
+            themeTokens.component.card.elevatedCard,
+            "--md-comp-elevated-card"
+        ),
+        ...flattenTokens(
+            themeTokens.component.card.filledCard,
+            "--md-comp-filled-card"
+        ),
+        ...flattenTokens(
+            themeTokens.component.card.outlinedCard,
+            "--md-comp-outlined-card"
+        ),
+    };
+
+    return variables;
 }
 
-function createElevationVariables(): string {
-    const variables: Record<string, string | number> = {};
 
-    for (const [name, token] of Object.entries(elevationTokens)) {
-        variables[`--md-sys-elevation-${toKebabCase(name)}`] =
-            token.shadow;
-    }
-
-    return createVariables(variables);
+export function generateThemeCss(): string {
+    return `${createCssRule(":root", createThemeVariables())}\n`;
 }
 
-function createMotionVariables(): string {
-    const variables: Record<string, string | number> = {};
+export function writeThemeCss(): string {
+    const output = resolve(process.cwd(), "dist/theme/theme.css");
+    const css = generateThemeCss();
 
-    for (const [name, value] of Object.entries(motionTokens.duration)) {
-        variables[`--md-sys-motion-duration-${toKebabCase(name)}`] =
-            value;
-    }
+    mkdirSync(dirname(output), { recursive: true });
+    writeFileSync(output, css);
 
-    for (const [name, value] of Object.entries(motionTokens.easing)) {
-        variables[`--md-sys-motion-easing-${toKebabCase(name)}`] =
-            value;
-    }
-
-    return createVariables(variables);
+    return output;
 }
 
-function createStateVariables(): string {
-    const variables: Record<string, string | number> = {};
-
-    for (const name of ["hover", "focus", "pressed", "dragged"] as const) {
-        variables[
-            `--md-sys-state-${toKebabCase(name)}-state-layer-opacity`
-        ] = stateTokens[name].opacity;
-    }
-
-    variables["--md-sys-state-disabled-state-layer-opacity"] =
-        stateTokens.disabled.stateLayerOpacity;
-
-    variables["--md-sys-state-disabled-content-opacity"] =
-        stateTokens.disabled.contentOpacity;
-
-    return createVariables(variables);
+if (process.argv[1]?.replace(/\\/g, "/").endsWith("/Theme/generator.ts")) {
+    writeThemeCss();
 }
-
-function createLayoutVariables(): string {
-    const variables: Record<string, string | number> = {};
-
-    for (const [name, value] of Object.entries(layoutTokens.spacing)) {
-        variables[`--yakad-spacing-${toKebabCase(name)}`] = value;
-    }
-
-    for (const [name, value] of Object.entries(layoutTokens.breakpoint)) {
-        variables[`--yakad-breakpoint-${toKebabCase(name)}`] = value;
-    }
-
-    return createVariables(variables);
-}
-
-const sections = [
-    createTypographyVariables(),
-    createShapeVariables(),
-    createElevationVariables(),
-    createMotionVariables(),
-    createStateVariables(),
-    createLayoutVariables(),
-];
-
-const css = `:root {
-${sections.join("\n\n")}
-}
-`;
-
-const outputDirectory = resolve(process.cwd(), "dist/theme");
-const tokensOutput = resolve(outputDirectory, "tokens.css");
-const themeOutput = resolve(outputDirectory, "theme.css");
-
-mkdirSync(dirname(tokensOutput), { recursive: true });
-
-writeFileSync(tokensOutput, css);
-
-writeFileSync(
-    themeOutput,
-    '@import "./color/colors.css";\n@import "./tokens.css";\n'
-);

@@ -1,0 +1,180 @@
+.root {
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    width: 100%;
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+    box-shadow: var(--md-sys-elevation-level0);
+    transform: translateY(0);
+    transition:
+        background-color 200ms ease,
+        box-shadow 200ms ease,
+        transform 200ms ease;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    width: 100%;
+    min-height: 64px;
+    padding-inline: 24px;
+}
+
+.navigation {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 48px;
+}
+
+.title {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-title-large-font);
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    letter-spacing: var(--md-sys-typescale-title-large-tracking);
+    text-overflow: ellipsis;
+}
+
+.actions {
+    display: flex;
+    grid-column: 3;
+    grid-row: 1;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 48px;
+}
+
+.navigation>*,
+.actions>* {
+    flex-shrink: 0;
+}
+
+.navigation svg,
+.actions svg {
+    width: 24px;
+    height: 24px;
+}
+
+.small {
+    min-height: 64px;
+}
+
+.centerAligned {
+    min-height: 64px;
+}
+
+.centerAligned .container {
+    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr);
+}
+
+.centerAligned .title {
+    grid-column: 2;
+    justify-content: center;
+    text-align: center;
+}
+
+.centerAligned .actions {
+    grid-column: 3;
+}
+
+.medium {
+    min-height: 112px;
+}
+
+.medium .container {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: 64px 48px;
+    align-items: center;
+}
+
+.medium .navigation,
+.medium .actions {
+    grid-row: 1;
+}
+
+.medium .title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+    font-family: var(--md-sys-typescale-headline-small-font);
+    font-size: var(--md-sys-typescale-headline-small-size);
+    font-weight: var(--md-sys-typescale-headline-small-weight);
+    line-height: var(--md-sys-typescale-headline-small-line-height);
+    letter-spacing: var(--md-sys-typescale-headline-small-tracking);
+}
+
+.large {
+    min-height: 152px;
+}
+
+.large .container {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: 64px 88px;
+    align-items: center;
+}
+
+.large .navigation,
+.large .actions {
+    grid-row: 1;
+}
+
+.large .title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+    font-family: var(--md-sys-typescale-headline-medium-font);
+    font-size: var(--md-sys-typescale-headline-medium-size);
+    font-weight: var(--md-sys-typescale-headline-medium-weight);
+    line-height: var(--md-sys-typescale-headline-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-headline-medium-tracking);
+}
+
+.scrolledUnder {
+    background-color: var(--md-sys-color-surface-container);
+    box-shadow: var(--md-sys-elevation-level2);
+}
+
+.collapsed.medium,
+.collapsed.large {
+    min-height: 64px;
+}
+
+.collapsed.medium .container,
+.collapsed.large .container {
+    grid-template-rows: 64px;
+}
+
+.collapsed.medium .title,
+.collapsed.large .title {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    font-family: var(--md-sys-typescale-title-large-font);
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    letter-spacing: var(--md-sys-typescale-title-large-tracking);
+}
+
+.hidden:not(:focus-within) {
+    transform: translateY(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .root {
+        transition: none;
+    }
+}

@@ -1,34 +1,22 @@
-
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import "./Button.css";
 
-const buttonVariants = cva(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-secondary)] disabled:pointer-events-none disabled:opacity-50",
-    {
-        variants: {
-            variant: {
-                filled:
-                    "bg-[var(--md-sys-color-primary)] text-[var(--md-sys-color-on-primary)] hover:opacity-90",
-
-                tonal:
-                    "bg-[var(--md-sys-color-secondary-container)] text-[var(--md-sys-color-on-secondary-container)] hover:opacity-90",
-
-                outlined:
-                    "border border-[var(--md-sys-color-outline)] bg-transparent text-[var(--md-sys-color-primary)] hover:bg-[var(--md-sys-color-surface-container)]",
-
-                elevated:
-                    "bg-[var(--md-sys-color-surface-container-low)] text-[var(--md-sys-color-on-surface)] shadow-sm hover:bg-[var(--md-sys-color-surface-container)]",
-
-                text:
-                    "bg-transparent text-[var(--md-sys-color-primary)] hover:bg-[var(--md-sys-color-primary)]/10",
-            },
+const buttonVariants = cva("yakad-button", {
+    variants: {
+        variant: {
+            filled: "yakad-button--filled",
+            tonal: "yakad-button--tonal",
+            outlined: "yakad-button--outlined",
+            elevated: "yakad-button--elevated",
+            text: "yakad-button--text",
         },
-        defaultVariants: {
-            variant: "filled",
-        },
-    }
-);
+    },
+    defaultVariants: {
+        variant: "filled",
+    },
+});
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -42,21 +30,53 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className,
             variant,
             asChild = false,
-            ...props
+            disabled = false,
+            type = "button",
+            onClick,
+            tabIndex,
+            ...restProps
         },
         ref
     ) => {
-        const Comp = asChild ? Slot : "button";
+        const classNames = buttonVariants({ variant, className });
+
+        if (asChild) {
+            const handleClick: React.MouseEventHandler<HTMLButtonElement> = (
+                event
+            ) => {
+                if (disabled) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
+
+                onClick?.(event);
+            };
+
+            return (
+                <Slot
+                    ref={ref}
+                    data-slot="button"
+                    data-variant={variant ?? "filled"}
+                    className={classNames}
+                    aria-disabled={disabled || undefined}
+                    tabIndex={disabled ? -1 : tabIndex}
+                    onClick={handleClick}
+                    {...restProps}
+                />
+            );
+        }
 
         return (
-            <Comp
+            <button
                 ref={ref}
+                type={type}
+                disabled={disabled}
                 data-slot="button"
-                className={buttonVariants({
-                    variant,
-                    className,
-                })}
-                {...props}
+                data-variant={variant ?? "filled"}
+                className={classNames}
+                onClick={onClick}
+                {...restProps}
             />
         );
     }
@@ -64,4 +84,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+export { Button, buttonVariants };      

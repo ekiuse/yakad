@@ -1,33 +1,76 @@
-export const motionTokens = {
-    duration: {
-        short1: "50ms",
-        short2: "100ms",
-        short3: "150ms",
-        short4: "200ms",
-        medium1: "250ms",
-        medium2: "300ms",
-        medium3: "350ms",
-        medium4: "400ms",
-        long1: "450ms",
-        long2: "500ms",
-        long3: "550ms",
-        long4: "600ms",
-        extraLong1: "700ms",
-        extraLong2: "800ms",
-        extraLong3: "900ms",
-        extraLong4: "1000ms",
+
+export const motionScheme = "expressive" as const;
+
+const motionSchemeTokens = {
+    standard: {
+        fast: {
+            spatial: {
+                damping: 0.9,
+                stiffness: 1400,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 3800,
+            },
+        },
+        default: {
+            spatial: {
+                damping: 0.9,
+                stiffness: 700,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 1600,
+            },
+        },
+        slow: {
+            spatial: {
+                damping: 0.9,
+                stiffness: 300,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 800,
+            },
+        },
     },
-    easing: {
-        linear: "linear",
-        standard: "cubic-bezier(0.2, 0, 0, 1)",
-        standardAccelerate: "cubic-bezier(0.3, 0, 1, 1)",
-        standardDecelerate: "cubic-bezier(0, 0, 0, 1)",
-        emphasized: "cubic-bezier(0.2, 0, 0, 1)",
-        emphasizedAccelerate: "cubic-bezier(0.3, 0, 0.8, 0.15)",
-        emphasizedDecelerate: "cubic-bezier(0.05, 0.7, 0.1, 1)",
+    expressive: {
+        fast: {
+            spatial: {
+                damping: 0.6,
+                stiffness: 800,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 3800,
+            },
+        },
+        default: {
+            spatial: {
+                damping: 0.8,
+                stiffness: 380,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 1600,
+            },
+        },
+        slow: {
+            spatial: {
+                damping: 0.8,
+                stiffness: 200,
+            },
+            effects: {
+                damping: 1,
+                stiffness: 800,
+            },
+        },
     },
 } as const;
 
+export const motionTokens = motionSchemeTokens[motionScheme];
+
+export type MotionScheme = keyof typeof motionSchemeTokens;
 export type MotionTokens = typeof motionTokens;
-export type MotionDuration = keyof typeof motionTokens.duration;
-export type MotionEasing = keyof typeof motionTokens.easing;
+export type MotionSpeed = keyof MotionTokens;
+export type MotionProperty = keyof MotionTokens[MotionSpeed];

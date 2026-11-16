@@ -1,0 +1,31 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+}
+
+.gridItem {
+    grid-column: span var(--grid-span-compact, 4);
+    min-width: 0;
+}
+
+@media (min-width: 600px) {
+    .grid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+
+    .gridItem {
+        grid-column: span var(--grid-span-medium, 8);
+    }
+}
+
+@media (min-width: 840px) {
+    .grid {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .gridItem {
+        grid-column: span var(--grid-span-expanded, 12);
+    }
+}

@@ -1,6 +1,6 @@
 {
     "name": "@yakad/ui",
-    "version": "2.0.5",
+    "version": "2.0.13",
     "private": false,
     "author": "Natiq",
     "description": "UI components for NextJS/React",
@@ -25,7 +25,7 @@
         "clean": "rimraf dist/",
         "generate:color": "tsx src/Theme/color/generator.ts",
         "generate:theme": "tsx src/Theme/generator.ts",
-        "copy-files:css": "copyfiles -u 1 src/*.css src/**/*.css dist/",
+        "copy-files:css": "copyfiles -u 1 \"src/**/*.css\" \"src/*.css\" dist/",
         "copy-files:svg": "copyfiles -u 1 src/*.svg src/**/*.svg dist/",
         "build": "npm run clean && tsc && npm run generate:color && npm run generate:theme && npm run copy-files:css && npm run copy-files:svg",
         "typecheck": "tsc --noEmit",

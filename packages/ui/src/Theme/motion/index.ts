@@ -1,7 +1,12 @@
-export { motionTokens } from "./tokens";
+
+export {
+    motionScheme,
+    motionTokens,
+} from "./tokens";
 
 export type {
+    MotionScheme,
     MotionTokens,
-    MotionDuration,
-    MotionEasing,
+    MotionSpeed,
+    MotionProperty,
 } from "./tokens";

@@ -1,0 +1,171 @@
+.yakad-button {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 24px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: var(--md-sys-shape-corner-full);
+    font-family: var(--md-sys-typescale-label-large-font);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    box-shadow: var(--md-sys-elevation-level0);
+    transition:
+        background-color 150ms,
+        color 150ms,
+        border-color 150ms,
+        box-shadow 150ms;
+}
+
+.yakad-button::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.yakad-button>* {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.yakad-button svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.yakad-button:hover:not(:disabled):not([aria-disabled="true"])::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.yakad-button:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    outline: 3px solid var(--md-sys-color-secondary);
+    outline-offset: 2px;
+}
+
+.yakad-button:focus-visible:not(:disabled):not([aria-disabled="true"])::before {
+    opacity: var(--md-sys-state-focus-opacity);
+}
+
+.yakad-button:active:not(:disabled):not([aria-disabled="true"])::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+.yakad-button:disabled,
+.yakad-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: var(--md-sys-elevation-level0);
+}
+
+.yakad-button:disabled::before,
+.yakad-button[aria-disabled="true"]::before {
+    display: none;
+}
+
+.yakad-button--filled {
+    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-primary);
+}
+
+.yakad-button--filled:disabled,
+.yakad-button--filled[aria-disabled="true"] {
+    color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 38%,
+            transparent);
+    background-color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 12%,
+            transparent);
+}
+
+.yakad-button--tonal {
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+}
+
+.yakad-button--tonal:disabled,
+.yakad-button--tonal[aria-disabled="true"] {
+    color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 38%,
+            transparent);
+    background-color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 12%,
+            transparent);
+}
+
+.yakad-button--outlined {
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: transparent;
+    border-color: var(--md-sys-color-outline);
+}
+
+.yakad-button--outlined:disabled,
+.yakad-button--outlined[aria-disabled="true"] {
+    color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 38%,
+            transparent);
+    border-color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 12%,
+            transparent);
+}
+
+.yakad-button--elevated {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-surface-container-low);
+    box-shadow: var(--md-sys-elevation-level1);
+}
+
+.yakad-button--elevated:hover:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow: var(--md-sys-elevation-level2);
+}
+
+.yakad-button--elevated:active:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow: var(--md-sys-elevation-level1);
+}
+
+.yakad-button--elevated:disabled,
+.yakad-button--elevated[aria-disabled="true"] {
+    color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 38%,
+            transparent);
+    background-color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 12%,
+            transparent);
+}
+
+.yakad-button--text {
+    color: var(--md-sys-color-primary);
+    background-color: transparent;
+}
+
+.yakad-button--text:disabled,
+.yakad-button--text[aria-disabled="true"] {
+    color: color-mix(in srgb,
+            var(--md-sys-color-on-surface) 38%,
+            transparent);
+    background-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yakad-button {
+        transition: none;
+    }
+}

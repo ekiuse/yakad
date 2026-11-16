@@ -1,27 +1,27 @@
-import { writeFileSync, mkdirSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
+import type { CssVariables } from "../utils/css";
+import { createCssRule } from "../utils/css";
 import { createColorTokens } from "./tokens";
 import { darkColorRoles, lightColorRoles } from "./roles";
 
-function createCssVariables(
-    tokens: ReturnType<typeof createColorTokens>
-) {
-    return Object.entries(tokens)
-        .map(([name, value]) => `    --md-sys-color-${name}: ${value};`)
-        .join("\n");
+function createColorVariables(
+    roles: typeof lightColorRoles
+): CssVariables {
+    const tokens = createColorTokens(roles);
+
+    return Object.fromEntries(
+        Object.entries(tokens).map(([name, value]) => [
+            `--md-sys-color-${name}`,
+            value,
+        ])
+    );
 }
 
-const lightTokens = createColorTokens(lightColorRoles);
-const darkTokens = createColorTokens(darkColorRoles);
-
-const css = `:root {
-${createCssVariables(lightTokens)}
-}
-
-.dark {
-${createCssVariables(darkTokens)}
-}
-`;
+const css = [
+    createCssRule(":root", createColorVariables(lightColorRoles)),
+    createCssRule(".dark", createColorVariables(darkColorRoles)),
+].join("\n\n");
 
 const output = resolve(
     process.cwd(),
@@ -30,4 +30,4 @@ const output = resolve(
 
 mkdirSync(dirname(output), { recursive: true });
 
-writeFileSync(output, css);
+writeFileSync(output, `${css}\n`, "utf8");
