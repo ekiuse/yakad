@@ -14,6 +14,7 @@ import {
 import { appBarTokens } from "./AppBar/tokens";
 import { cardTokens } from "./Card/tokens";
 import { checkboxTokens } from "./CheckBox/tokens";
+import { navigationBarTokens } from "./NavigationBar/tokens";
 
 const buttonVariantCssTokens = Object.fromEntries(
     Object.entries(buttonVariantTokens).map(([variant, tokens]) => {
@@ -107,6 +108,17 @@ function resolveComponentTokens(
             if (key === "shape") {
                 return [key, resolveShapeToken(value)];
             }
+            if (key === "font") {
+                const typographyRole = value.replace(
+                    /[A-Z]/g,
+                    (letter) => `-${letter.toLowerCase()}`
+                );
+
+                return [
+                    key,
+                    `var(--md-sys-typescale-${typographyRole}-font)`,
+                ];
+            }
 
             if (key === "opacity") {
                 return [
@@ -129,6 +141,8 @@ function resolveComponentTokens(
 }
 
 export const checkboxCssTokens = resolveComponentTokens(checkboxTokens);
+export const navigationBarCssTokens =
+    resolveComponentTokens(navigationBarTokens);
 
 function resolveElevationToken(level: string): string {
     return `var(--md-sys-elevation-${level})`;
@@ -197,4 +211,5 @@ export const componentCssTokens = {
     appBar: appBarCssTokens,
     card: cardCssTokens,
     checkbox: checkboxCssTokens,
+    navigationBar: navigationBarCssTokens,
 } as const;

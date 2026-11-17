@@ -18,6 +18,7 @@ export type ButtonShape =
 import type {
     textFieldTokens,
 } from "./TextField";
+import { navigationBarTokens } from "./NavigationBar";
 
 export type TextFieldTokens = typeof textFieldTokens;
 export type TextFieldVariant = keyof typeof textFieldTokens;
@@ -31,3 +32,9 @@ export type CheckboxSelectionState =
     | "selected"
     | "indeterminate";
 
+export type {
+    navigationBarTokens
+}
+    from "./NavigationBar"
+
+export type NavigationBar = typeof navigationBarTokens

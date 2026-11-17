@@ -75,6 +75,10 @@ export function createThemeVariables(): CssVariables {
             themeTokens.component.checkbox,
             "--md-comp-checkbox"
         ),
+        ...flattenTokens(
+            themeTokens.component.navigationBar,
+            "--md-comp-navigation-bar"
+        ),
     };
 
     return variables;
