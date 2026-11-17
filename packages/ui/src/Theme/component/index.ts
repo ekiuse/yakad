@@ -38,3 +38,10 @@ export type {
     CardTokens,
     CardVariant,
 } from "./types";
+
+export { checkboxTokens } from "./CheckBox";
+
+export type {
+    CheckboxTokens,
+    CheckboxSelectionState,
+} from "./types";

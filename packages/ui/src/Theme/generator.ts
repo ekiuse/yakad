@@ -71,6 +71,10 @@ export function createThemeVariables(): CssVariables {
             themeTokens.component.card.outlinedCard,
             "--md-comp-outlined-card"
         ),
+        ...flattenTokens(
+            themeTokens.component.checkbox,
+            "--md-comp-checkbox"
+        ),
     };
 
     return variables;

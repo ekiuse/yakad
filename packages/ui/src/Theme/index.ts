@@ -110,6 +110,7 @@ export {
     outlinedTextFieldTokens,
     appBarTokens,
     cardTokens,
+    checkboxTokens
 } from "./component";
 
 export type {
@@ -122,5 +123,7 @@ export type {
     AppBarTokens,
     CardTokens,
     CardVariant,
+    CheckboxTokens,
+    CheckboxSelectionState,
 } from "./component";
 

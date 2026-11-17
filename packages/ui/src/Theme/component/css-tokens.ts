@@ -13,6 +13,7 @@ import {
 
 import { appBarTokens } from "./AppBar/tokens";
 import { cardTokens } from "./Card/tokens";
+import { checkboxTokens } from "./CheckBox/tokens";
 
 const buttonVariantCssTokens = Object.fromEntries(
     Object.entries(buttonVariantTokens).map(([variant, tokens]) => {
@@ -79,7 +80,7 @@ function resolveShapeToken(shape: string): string {
     return `var(--md-sys-shape-corner-${shape.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)})`;
 }
 
-function resolveCardTokens(
+function resolveComponentTokens(
     tokens: Record<string, unknown>
 ): Record<string, unknown> {
     return Object.fromEntries(
@@ -87,7 +88,7 @@ function resolveCardTokens(
             if (value !== null && typeof value === "object") {
                 return [
                     key,
-                    resolveCardTokens(value as Record<string, unknown>),
+                    resolveComponentTokens(value as Record<string, unknown>),
                 ];
             }
 
@@ -126,6 +127,8 @@ function resolveCardTokens(
         })
     );
 }
+
+export const checkboxCssTokens = resolveComponentTokens(checkboxTokens);
 
 function resolveElevationToken(level: string): string {
     return `var(--md-sys-elevation-${level})`;
@@ -176,9 +179,9 @@ export const textFieldCssTokens = {
 } as const;
 
 export const cardCssTokens = {
-    elevatedCard: resolveCardTokens(cardTokens.elevated),
-    filledCard: resolveCardTokens(cardTokens.filled),
-    outlinedCard: resolveCardTokens(cardTokens.outlined),
+    elevatedCard: resolveComponentTokens(cardTokens.elevated),
+    filledCard: resolveComponentTokens(cardTokens.filled),
+    outlinedCard: resolveComponentTokens(cardTokens.outlined),
 } as const;
 
 export const appBarCssTokens = {
@@ -193,4 +196,5 @@ export const componentCssTokens = {
     textField: textFieldCssTokens,
     appBar: appBarCssTokens,
     card: cardCssTokens,
+    checkbox: checkboxCssTokens,
 } as const;
