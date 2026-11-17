@@ -79,6 +79,14 @@ export function createThemeVariables(): CssVariables {
             themeTokens.component.navigationBar,
             "--md-comp-navigation-bar"
         ),
+        ...flattenTokens(
+            themeTokens.component.radio,
+            "--md-comp-radio"
+        ),
+        ...flattenTokens(
+            themeTokens.component.divider,
+            "--md-comp-divider"
+        ),
     };
 
     return variables;

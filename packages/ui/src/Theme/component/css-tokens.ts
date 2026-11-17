@@ -15,6 +15,8 @@ import { appBarTokens } from "./AppBar/tokens";
 import { cardTokens } from "./Card/tokens";
 import { checkboxTokens } from "./CheckBox/tokens";
 import { navigationBarTokens } from "./NavigationBar/tokens";
+import { radioTokens } from "./Radio/tokens";
+import { dividerTokens } from "./Divider/tokens";
 
 const buttonVariantCssTokens = Object.fromEntries(
     Object.entries(buttonVariantTokens).map(([variant, tokens]) => {
@@ -204,6 +206,12 @@ export const appBarCssTokens = {
     medium: createAppBarCssTokens(appBarTokens.medium),
     large: createAppBarCssTokens(appBarTokens.large),
 } as const;
+export const radioCssTokens = resolveComponentTokens(radioTokens);
+
+export const dividerCssTokens = {
+    color: resolveColorToken(dividerTokens.color),
+    thickness: dividerTokens.thickness,
+} as const;
 
 export const componentCssTokens = {
     button: buttonCssTokens,
@@ -212,4 +220,6 @@ export const componentCssTokens = {
     card: cardCssTokens,
     checkbox: checkboxCssTokens,
     navigationBar: navigationBarCssTokens,
+    radio: radioCssTokens,
+    divider: dividerCssTokens,
 } as const;
