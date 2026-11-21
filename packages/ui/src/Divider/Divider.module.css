@@ -1,0 +1,15 @@
+.root {
+    flex-shrink: 0;
+    box-sizing: border-box;
+    background-color: var(--md-comp-divider-color);
+}
+
+.horizontal {
+    width: 100%;
+    height: var(--md-comp-divider-thickness);
+}
+
+.vertical {
+    width: var(--md-comp-divider-thickness);
+    height: 100%;
+}
