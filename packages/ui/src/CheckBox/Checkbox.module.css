@@ -1,0 +1,234 @@
+.root {
+    --checkbox-hover-state-layer-color: var(--md-comp-checkbox-unselected-hover-state-layer-color);
+    --checkbox-hover-state-layer-opacity: var(--md-comp-checkbox-unselected-hover-state-layer-opacity);
+
+    --checkbox-focus-state-layer-color: var(--md-comp-checkbox-unselected-focus-state-layer-color);
+    --checkbox-focus-state-layer-opacity: var(--md-comp-checkbox-unselected-focus-state-layer-opacity);
+
+    --checkbox-pressed-state-layer-color: var(--md-comp-checkbox-unselected-pressed-state-layer-color);
+    --checkbox-pressed-state-layer-opacity: var(--md-comp-checkbox-unselected-pressed-state-layer-opacity);
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: calc(var(--md-comp-checkbox-touch-target-size) * 1px);
+    height: calc(var(--md-comp-checkbox-touch-target-size) * 1px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--md-comp-checkbox-state-layer-shape);
+    background: transparent;
+    color: var(--md-sys-color-on-primary);
+    cursor: pointer;
+    vertical-align: middle;
+    isolation: isolate;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.root::before,
+.root::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    pointer-events: none;
+    content: "";
+    transform: translate(-50%, -50%);
+}
+
+.root::before {
+    z-index: 0;
+    width: calc(var(--md-comp-checkbox-container-size) * 1px);
+    height: calc(var(--md-comp-checkbox-container-size) * 1px);
+    border: calc(var(--md-comp-checkbox-unselected-outline-width) * 1px) solid var(--md-comp-checkbox-unselected-outline-color);
+    border-radius: calc(var(--md-comp-checkbox-container-shape) * 1px);
+    background-color: transparent;
+}
+
+.root::after {
+    z-index: -1;
+    width: calc(var(--md-comp-checkbox-state-layer-size) * 1px);
+    height: calc(var(--md-comp-checkbox-state-layer-size) * 1px);
+    border-radius: var(--md-comp-checkbox-state-layer-shape);
+    background-color: transparent;
+    opacity: 0;
+}
+
+.indicator {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--md-comp-checkbox-icon-size) * 1px);
+    height: calc(var(--md-comp-checkbox-icon-size) * 1px);
+    color: var(--md-comp-checkbox-selected-icon-color);
+    pointer-events: none;
+}
+
+.icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.checkIcon,
+.indeterminateIcon {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.indeterminateIcon {
+    display: none;
+}
+
+.root[data-state="indeterminate"] .checkIcon {
+    display: none;
+}
+
+.root[data-state="indeterminate"] .indeterminateIcon {
+    display: block;
+}
+
+.root[data-state="checked"],
+.root[data-state="indeterminate"] {
+    color: var(--md-comp-checkbox-selected-icon-color);
+}
+
+.root[data-state="checked"]::before,
+.root[data-state="indeterminate"]::before {
+    border-width: calc(var(--md-comp-checkbox-selected-outline-width) * 1px);
+    border-color: transparent;
+    background-color: var(--md-comp-checkbox-selected-container-color);
+}
+
+.root[data-state="checked"] {
+    --checkbox-hover-state-layer-color: var(--md-comp-checkbox-selected-hover-state-layer-color);
+    --checkbox-hover-state-layer-opacity: var(--md-comp-checkbox-selected-hover-state-layer-opacity);
+
+    --checkbox-focus-state-layer-color: var(--md-comp-checkbox-selected-focus-state-layer-color);
+    --checkbox-focus-state-layer-opacity: var(--md-comp-checkbox-selected-focus-state-layer-opacity);
+
+    --checkbox-pressed-state-layer-color: var(--md-comp-checkbox-selected-pressed-state-layer-color);
+    --checkbox-pressed-state-layer-opacity: var(--md-comp-checkbox-selected-pressed-state-layer-opacity);
+}
+
+.root[data-state="indeterminate"] {
+    --checkbox-hover-state-layer-color: var(--md-comp-checkbox-selected-hover-state-layer-color);
+    --checkbox-hover-state-layer-opacity: var(--md-comp-checkbox-selected-hover-state-layer-opacity);
+
+    --checkbox-focus-state-layer-color: var(--md-comp-checkbox-selected-focus-state-layer-color);
+    --checkbox-focus-state-layer-opacity: var(--md-comp-checkbox-selected-focus-state-layer-opacity);
+
+    --checkbox-pressed-state-layer-color: var(--md-comp-checkbox-selected-pressed-state-layer-color);
+    --checkbox-pressed-state-layer-opacity: var(--md-comp-checkbox-selected-pressed-state-layer-opacity);
+}
+
+.root.error {
+    --checkbox-hover-state-layer-color: var(--md-comp-checkbox-error-state-layer-hover-color);
+    --checkbox-hover-state-layer-opacity: var(--md-comp-checkbox-error-state-layer-hover-opacity);
+
+    --checkbox-focus-state-layer-color: var(--md-comp-checkbox-error-state-layer-focus-color);
+    --checkbox-focus-state-layer-opacity: var(--md-comp-checkbox-error-state-layer-focus-opacity);
+
+    --checkbox-pressed-state-layer-color: var(--md-comp-checkbox-error-state-layer-pressed-color);
+    --checkbox-pressed-state-layer-opacity: var(--md-comp-checkbox-error-state-layer-pressed-opacity);
+}
+
+.root.error:not([data-state="checked"]):not([data-state="indeterminate"])::before {
+    border-color: var(--md-comp-checkbox-error-unselected-outline-color);
+    border-width: calc(var(--md-comp-checkbox-error-unselected-outline-width) * 1px);
+}
+
+.root.error[data-state="checked"]::before,
+.root.error[data-state="indeterminate"]::before {
+    border-width: calc(var(--md-comp-checkbox-error-selected-outline-width) * 1px);
+    background-color: var(--md-comp-checkbox-error-selected-container-color);
+}
+
+.root.error[data-state="checked"],
+.root.error[data-state="indeterminate"] {
+    color: var(--md-comp-checkbox-error-selected-icon-color);
+}
+
+.root:hover:not([data-disabled])::after {
+    background-color: var(--checkbox-hover-state-layer-color);
+    opacity: var(--checkbox-hover-state-layer-opacity);
+}
+
+.root:active:not([data-disabled])::after {
+    background-color: var(--checkbox-pressed-state-layer-color);
+    opacity: var(--checkbox-pressed-state-layer-opacity);
+}
+
+.root:focus-visible {
+    outline: var(--md-comp-checkbox-focus-indicator-thickness) solid var(--md-comp-checkbox-focus-indicator-color);
+    outline-offset: var(--md-comp-checkbox-focus-indicator-offset);
+}
+
+.root:focus-visible::after {
+    background-color: var(--checkbox-focus-state-layer-color);
+    opacity: var(--checkbox-focus-state-layer-opacity);
+}
+
+.root:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.root.disabled,
+.root[data-disabled] {
+    cursor: not-allowed;
+}
+
+.root.disabled:not([data-state="checked"]):not([data-state="indeterminate"])::before,
+.root[data-disabled]:not([data-state="checked"]):not([data-state="indeterminate"])::before {
+    border-color: var(--md-comp-checkbox-unselected-disabled-outline-color);
+    border-width: calc(var(--md-comp-checkbox-unselected-disabled-outline-width) * 1px);
+    opacity: var(--md-comp-checkbox-unselected-disabled-container-opacity);
+}
+
+.root.disabled[data-state="checked"]::before,
+.root.disabled[data-state="indeterminate"]::before,
+.root[data-disabled][data-state="checked"]::before,
+.root[data-disabled][data-state="indeterminate"]::before {
+    background-color: var(--md-comp-checkbox-selected-disabled-container-color);
+    opacity: var(--md-comp-checkbox-selected-disabled-container-opacity);
+}
+
+.root.disabled[data-state="checked"],
+.root.disabled[data-state="indeterminate"],
+.root[data-disabled][data-state="checked"],
+.root[data-disabled][data-state="indeterminate"] {
+    color: var(--md-comp-checkbox-selected-disabled-icon-color);
+}
+
+.root.disabled::after,
+.root[data-disabled]::after {
+    display: none;
+}
+
+.root.disabled:focus-visible,
+.root[data-disabled]:focus-visible {
+    outline: none;
+}
+
+.root.error.disabled:not([data-state="checked"]):not([data-state="indeterminate"])::before,
+.root.error[data-disabled]:not([data-state="checked"]):not([data-state="indeterminate"])::before {
+    border-color: var(--md-comp-checkbox-unselected-disabled-outline-color);
+}
+
+.root.error.disabled[data-state="checked"]::before,
+.root.error.disabled[data-state="indeterminate"]::before,
+.root.error[data-disabled][data-state="checked"]::before,
+.root.error[data-disabled][data-state="indeterminate"]::before {
+    background-color: var(--md-comp-checkbox-selected-disabled-container-color);
+}
+
+.root:disabled {
+    pointer-events: none;
+}
