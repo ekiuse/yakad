@@ -8,7 +8,7 @@ export * from "./Card/Card"; // Stack Based
 export * from "./Layout";
 export * from "./Theme";
 // Theme & Styling
-export * from "./Separator/Separator";
+export * from "./Divider/Divider";
 export * from "./Hr/Hr";
 // UI Components
 export * from "./Table/Table";
