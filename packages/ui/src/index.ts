@@ -14,11 +14,11 @@ export * from "./Hr/Hr";
 export * from "./Table/Table";
 export * from "./Button/Button";
 export * from "./SvgIcon/SvgIcon";
-export * from "./Text/Text";
+export * from "./Text/TextField";
 export * from "./Label/Label"
 // Form Components
 export * from "./Input/Input";
 export * from "./CheckBox/CheckBox";
-export * from "./RadioGroup/RadioGroup";
+export * from "./Radio/Radio";
 // Overlays
 export * from "./Avatar/Avatar";

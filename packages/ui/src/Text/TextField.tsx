@@ -20,14 +20,14 @@ const textFieldVariants = cva(styles.root, {
     },
 });
 
-export type TextFieldVariant = "filled" | "outlined";
+export type TextFieldComponentVariant = "filled" | "outlined";
 
 export type TextFieldProps = Omit<
     ComponentPropsWithoutRef<"input">,
     "size" | "placeholder"
 > &
     Omit<VariantProps<typeof textFieldVariants>, "variant"> & {
-        variant?: TextFieldVariant;
+        variant?: TextFieldComponentVariant;
         label: string;
         supportingText?: ReactNode;
         error?: boolean;
