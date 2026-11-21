@@ -1,171 +1,318 @@
-.yakad-button {
+.root {
+    --button-container-color: var(--md-comp-button-variants-filled-container-color);
+    --button-content-color: var(--md-comp-button-variants-filled-content-color);
+    --button-icon-color: var(--md-comp-button-variants-filled-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-filled-state-layer-color);
+    --button-disabled-container-color: var(--md-comp-button-variants-filled-disabled-container-color);
+    --button-disabled-container-opacity: var(--md-comp-button-variants-filled-disabled-container-opacity, 1);
+    --button-disabled-content-color: var(--md-comp-button-variants-filled-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-filled-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-filled-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-filled-disabled-icon-opacity, 1);
+    --button-outline-color: transparent;
+    --button-disabled-outline-color: transparent;
+    --button-outline-width: 0px;
+    --button-elevation: var(--md-comp-button-variants-filled-elevation-default);
+
     position: relative;
     isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    gap: 8px;
-    min-height: 40px;
-    padding: 0 24px;
-    overflow: hidden;
-    border: 1px solid transparent;
-    border-radius: var(--md-sys-shape-corner-full);
-    font-family: var(--md-sys-typescale-label-large-font);
+    box-sizing: border-box;
+
+    min-height: var(--button-container-height);
+    padding-block: var(--button-content-padding-block);
+    padding-inline: var(--button-content-padding-inline);
+    gap: var(--button-icon-label-space);
+
+    border: var(--button-outline-width) solid var(--button-outline-color);
+    border-radius: var(--button-container-shape);
+
+    background-color: var(--button-container-color);
+    color: var(--button-content-color);
+    box-shadow: var(--button-elevation);
+
+    font-family: var(--md-comp-button-typography-label);
     font-size: var(--md-sys-typescale-label-large-size);
     font-weight: var(--md-sys-typescale-label-large-weight);
     line-height: var(--md-sys-typescale-label-large-line-height);
     letter-spacing: var(--md-sys-typescale-label-large-tracking);
+
+    text-align: center;
     text-decoration: none;
     white-space: nowrap;
-    cursor: pointer;
     user-select: none;
+    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    outline: none;
-    box-shadow: var(--md-sys-elevation-level0);
+
     transition:
-        background-color 150ms,
-        color 150ms,
-        border-color 150ms,
-        box-shadow 150ms;
+        background-color 150ms ease,
+        box-shadow 150ms ease,
+        border-radius 250ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.yakad-button::before {
+.root::before {
     position: absolute;
-    z-index: -1;
+    z-index: 0;
     inset: 0;
+
+    border-radius: inherit;
+    background-color: var(--button-state-layer-color);
+
     content: "";
-    background-color: currentColor;
     opacity: 0;
     pointer-events: none;
+
+    transition: opacity 150ms ease;
 }
 
-.yakad-button>* {
+.root>* {
     position: relative;
     z-index: 1;
+}
+
+.root :global(svg) {
+    width: var(--button-icon-size);
+    height: var(--button-icon-size);
     flex-shrink: 0;
+    color: var(--button-icon-color);
 }
 
-.yakad-button svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
+.root:hover:not(:disabled):not(.disabled) {
+    box-shadow: var(--button-elevation-hover);
 }
 
-.yakad-button:hover:not(:disabled):not([aria-disabled="true"])::before {
-    opacity: var(--md-sys-state-hover-opacity);
+.root:hover:not(:disabled):not(.disabled)::before {
+    opacity: var(--md-comp-button-state-layer-hover);
 }
 
-.yakad-button:focus-visible:not(:disabled):not([aria-disabled="true"]) {
-    outline: 3px solid var(--md-sys-color-secondary);
-    outline-offset: 2px;
+.root:focus-visible {
+    outline: calc(var(--md-sys-state-focus-indicator-thickness) * 1px) solid var(--md-sys-color-secondary);
+    outline-offset: calc(var(--md-sys-state-focus-indicator-outer-offset) * 1px);
+    box-shadow: var(--button-elevation-focus);
 }
 
-.yakad-button:focus-visible:not(:disabled):not([aria-disabled="true"])::before {
-    opacity: var(--md-sys-state-focus-opacity);
+.root:focus-visible::before {
+    opacity: var(--md-comp-button-state-layer-focus);
 }
 
-.yakad-button:active:not(:disabled):not([aria-disabled="true"])::before {
-    opacity: var(--md-sys-state-pressed-opacity);
+.root:active:not(:disabled):not(.disabled) {
+    border-radius: var(--button-pressed-container-shape);
+    box-shadow: var(--button-elevation-pressed);
 }
 
-.yakad-button:disabled,
-.yakad-button[aria-disabled="true"] {
+.root:active:not(:disabled):not(.disabled)::before {
+    opacity: var(--md-comp-button-state-layer-pressed);
+}
+
+.root:disabled,
+.disabled {
+    background-color: color-mix(in srgb,
+            var(--button-disabled-container-color) calc(var(--button-disabled-container-opacity) * 100%),
+            transparent);
+    color: color-mix(in srgb,
+            var(--button-disabled-content-color) calc(var(--button-disabled-content-opacity) * 100%),
+            transparent);
+    box-shadow: var(--button-elevation-disabled);
     cursor: not-allowed;
+}
+
+.root:disabled::before,
+.disabled::before {
+    opacity: 0;
+}
+
+.root:disabled :global(svg),
+.disabled :global(svg) {
+    color: color-mix(in srgb,
+            var(--button-disabled-icon-color) calc(var(--button-disabled-icon-opacity) * 100%),
+            transparent);
+}
+
+.disabled {
     pointer-events: none;
-    box-shadow: var(--md-sys-elevation-level0);
 }
 
-.yakad-button:disabled::before,
-.yakad-button[aria-disabled="true"]::before {
-    display: none;
+.filled {
+    --button-container-color: var(--md-comp-button-variants-filled-container-color);
+    --button-content-color: var(--md-comp-button-variants-filled-content-color);
+    --button-icon-color: var(--md-comp-button-variants-filled-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-filled-state-layer-color);
+
+    --button-disabled-container-color: var(--md-comp-button-variants-filled-disabled-container-color);
+    --button-disabled-container-opacity: var(--md-comp-button-variants-filled-disabled-container-opacity, 1);
+    --button-disabled-content-color: var(--md-comp-button-variants-filled-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-filled-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-filled-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-filled-disabled-icon-opacity, 1);
+
+    --button-elevation: var(--md-comp-button-variants-filled-elevation-default);
+    --button-elevation-hover: var(--md-comp-button-variants-filled-elevation-hover);
+    --button-elevation-focus: var(--md-comp-button-variants-filled-elevation-focus);
+    --button-elevation-pressed: var(--md-comp-button-variants-filled-elevation-pressed);
+    --button-elevation-disabled: var(--md-comp-button-variants-filled-elevation-disabled);
 }
 
-.yakad-button--filled {
-    color: var(--md-sys-color-on-primary);
-    background-color: var(--md-sys-color-primary);
+.tonal {
+    --button-container-color: var(--md-comp-button-variants-filled-tonal-container-color);
+    --button-content-color: var(--md-comp-button-variants-filled-tonal-content-color);
+    --button-icon-color: var(--md-comp-button-variants-filled-tonal-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-filled-tonal-state-layer-color);
+
+    --button-disabled-container-color: var(--md-comp-button-variants-filled-tonal-disabled-container-color);
+    --button-disabled-container-opacity: var(--md-comp-button-variants-filled-tonal-disabled-container-opacity, 1);
+    --button-disabled-content-color: var(--md-comp-button-variants-filled-tonal-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-filled-tonal-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-filled-tonal-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-filled-tonal-disabled-icon-opacity, 1);
+
+    --button-elevation: var(--md-comp-button-variants-filled-tonal-elevation-default);
+    --button-elevation-hover: var(--md-comp-button-variants-filled-tonal-elevation-hover);
+    --button-elevation-focus: var(--md-comp-button-variants-filled-tonal-elevation-focus);
+    --button-elevation-pressed: var(--md-comp-button-variants-filled-tonal-elevation-pressed);
+    --button-elevation-disabled: var(--md-comp-button-variants-filled-tonal-elevation-disabled);
 }
 
-.yakad-button--filled:disabled,
-.yakad-button--filled[aria-disabled="true"] {
-    color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 38%,
-            transparent);
-    background-color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 12%,
-            transparent);
+.elevated {
+    --button-container-color: var(--md-comp-button-variants-elevated-container-color);
+    --button-content-color: var(--md-comp-button-variants-elevated-content-color);
+    --button-icon-color: var(--md-comp-button-variants-elevated-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-elevated-state-layer-color);
+
+    --button-disabled-container-color: var(--md-comp-button-variants-elevated-disabled-container-color);
+    --button-disabled-container-opacity: var(--md-comp-button-variants-elevated-disabled-container-opacity, 1);
+    --button-disabled-content-color: var(--md-comp-button-variants-elevated-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-elevated-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-elevated-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-elevated-disabled-icon-opacity, 1);
+
+    --button-elevation: var(--md-comp-button-variants-elevated-elevation-default);
+    --button-elevation-hover: var(--md-comp-button-variants-elevated-elevation-hover);
+    --button-elevation-focus: var(--md-comp-button-variants-elevated-elevation-focus);
+    --button-elevation-pressed: var(--md-comp-button-variants-elevated-elevation-pressed);
+    --button-elevation-disabled: var(--md-comp-button-variants-elevated-elevation-disabled);
 }
 
-.yakad-button--tonal {
-    color: var(--md-sys-color-on-secondary-container);
-    background-color: var(--md-sys-color-secondary-container);
+.outlined {
+    --button-container-color: var(--md-comp-button-variants-outlined-container-color);
+    --button-content-color: var(--md-comp-button-variants-outlined-content-color);
+    --button-icon-color: var(--md-comp-button-variants-outlined-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-outlined-state-layer-color);
+
+    --button-disabled-container-color: var(--md-comp-button-variants-outlined-disabled-container-color);
+    --button-disabled-content-color: var(--md-comp-button-variants-outlined-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-outlined-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-outlined-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-outlined-disabled-icon-opacity, 1);
+
+    --button-outline-color: var(--md-comp-button-variants-outlined-outline-color);
+    --button-disabled-outline-color: var(--md-comp-button-variants-outlined-disabled-outline-color);
+    --button-outline-width: var(--button-outlined-outline-width);
+
+    --button-elevation: var(--md-comp-button-variants-outlined-elevation-default);
+    --button-elevation-hover: var(--md-comp-button-variants-outlined-elevation-hover);
+    --button-elevation-focus: var(--md-comp-button-variants-outlined-elevation-focus);
+    --button-elevation-pressed: var(--md-comp-button-variants-outlined-elevation-pressed);
+    --button-elevation-disabled: var(--md-comp-button-variants-outlined-elevation-disabled);
 }
 
-.yakad-button--tonal:disabled,
-.yakad-button--tonal[aria-disabled="true"] {
-    color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 38%,
-            transparent);
-    background-color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 12%,
-            transparent);
+.text {
+    --button-container-color: var(--md-comp-button-variants-text-container-color);
+    --button-content-color: var(--md-comp-button-variants-text-content-color);
+    --button-icon-color: var(--md-comp-button-variants-text-icon-color);
+    --button-state-layer-color: var(--md-comp-button-variants-text-state-layer-color);
+
+    --button-disabled-container-color: var(--md-comp-button-variants-text-disabled-container-color);
+    --button-disabled-content-color: var(--md-comp-button-variants-text-disabled-content-color);
+    --button-disabled-content-opacity: var(--md-comp-button-variants-text-disabled-content-opacity, 1);
+    --button-disabled-icon-color: var(--md-comp-button-variants-text-disabled-icon-color);
+    --button-disabled-icon-opacity: var(--md-comp-button-variants-text-disabled-icon-opacity, 1);
+
+    --button-elevation: var(--md-comp-button-variants-text-elevation-default);
+    --button-elevation-hover: var(--md-comp-button-variants-text-elevation-hover);
+    --button-elevation-focus: var(--md-comp-button-variants-text-elevation-focus);
+    --button-elevation-pressed: var(--md-comp-button-variants-text-elevation-pressed);
+    --button-elevation-disabled: var(--md-comp-button-variants-text-elevation-disabled);
 }
 
-.yakad-button--outlined {
-    color: var(--md-sys-color-on-surface-variant);
-    background-color: transparent;
-    border-color: var(--md-sys-color-outline);
+.outlined.disabled {
+    border-color: var(--button-disabled-outline-color);
 }
 
-.yakad-button--outlined:disabled,
-.yakad-button--outlined[aria-disabled="true"] {
-    color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 38%,
-            transparent);
-    border-color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 12%,
-            transparent);
+.extraSmall {
+    --button-container-height: var(--md-comp-button-sizes-extra-small-container-height);
+    --button-content-padding-inline: var(--md-comp-button-sizes-extra-small-content-padding-inline);
+    --button-content-padding-block: var(--md-comp-button-sizes-extra-small-content-padding-block);
+    --button-icon-size: var(--md-comp-button-sizes-extra-small-icon-size);
+    --button-icon-label-space: var(--md-comp-button-sizes-extra-small-icon-label-space);
+    --button-outlined-outline-width: var(--md-comp-button-sizes-extra-small-outlined-outline-width);
+    --button-shape-round: var(--md-comp-button-sizes-extra-small-container-shape-round);
+    --button-shape-square: var(--md-comp-button-sizes-extra-small-container-shape-square);
+    --button-pressed-container-shape: var(--md-comp-button-sizes-extra-small-pressed-container-shape);
 }
 
-.yakad-button--elevated {
-    color: var(--md-sys-color-primary);
-    background-color: var(--md-sys-color-surface-container-low);
-    box-shadow: var(--md-sys-elevation-level1);
+.small {
+    --button-container-height: var(--md-comp-button-sizes-small-container-height);
+    --button-content-padding-inline: var(--md-comp-button-sizes-small-content-padding-inline);
+    --button-content-padding-block: var(--md-comp-button-sizes-small-content-padding-block);
+    --button-icon-size: var(--md-comp-button-sizes-small-icon-size);
+    --button-icon-label-space: var(--md-comp-button-sizes-small-icon-label-space);
+    --button-outlined-outline-width: var(--md-comp-button-sizes-small-outlined-outline-width);
+    --button-shape-round: var(--md-comp-button-sizes-small-container-shape-round);
+    --button-shape-square: var(--md-comp-button-sizes-small-container-shape-square);
+    --button-pressed-container-shape: var(--md-comp-button-sizes-small-pressed-container-shape);
 }
 
-.yakad-button--elevated:hover:not(:disabled):not([aria-disabled="true"]) {
-    box-shadow: var(--md-sys-elevation-level2);
+.medium {
+    --button-container-height: var(--md-comp-button-sizes-medium-container-height);
+    --button-content-padding-inline: var(--md-comp-button-sizes-medium-content-padding-inline);
+    --button-content-padding-block: var(--md-comp-button-sizes-medium-content-padding-block);
+    --button-icon-size: var(--md-comp-button-sizes-medium-icon-size);
+    --button-icon-label-space: var(--md-comp-button-sizes-medium-icon-label-space);
+    --button-outlined-outline-width: var(--md-comp-button-sizes-medium-outlined-outline-width);
+    --button-shape-round: var(--md-comp-button-sizes-medium-container-shape-round);
+    --button-shape-square: var(--md-comp-button-sizes-medium-container-shape-square);
+    --button-pressed-container-shape: var(--md-comp-button-sizes-medium-pressed-container-shape);
 }
 
-.yakad-button--elevated:active:not(:disabled):not([aria-disabled="true"]) {
-    box-shadow: var(--md-sys-elevation-level1);
+.large {
+    --button-container-height: var(--md-comp-button-sizes-large-container-height);
+    --button-content-padding-inline: var(--md-comp-button-sizes-large-content-padding-inline);
+    --button-content-padding-block: var(--md-comp-button-sizes-large-content-padding-block);
+    --button-icon-size: var(--md-comp-button-sizes-large-icon-size);
+    --button-icon-label-space: var(--md-comp-button-sizes-large-icon-label-space);
+    --button-outlined-outline-width: var(--md-comp-button-sizes-large-outlined-outline-width);
+    --button-shape-round: var(--md-comp-button-sizes-large-container-shape-round);
+    --button-shape-square: var(--md-comp-button-sizes-large-container-shape-square);
+    --button-pressed-container-shape: var(--md-comp-button-sizes-large-pressed-container-shape);
 }
 
-.yakad-button--elevated:disabled,
-.yakad-button--elevated[aria-disabled="true"] {
-    color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 38%,
-            transparent);
-    background-color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 12%,
-            transparent);
+.extraLarge {
+    --button-container-height: var(--md-comp-button-sizes-extra-large-container-height);
+    --button-content-padding-inline: var(--md-comp-button-sizes-extra-large-content-padding-inline);
+    --button-content-padding-block: var(--md-comp-button-sizes-extra-large-content-padding-block);
+    --button-icon-size: var(--md-comp-button-sizes-extra-large-icon-size);
+    --button-icon-label-space: var(--md-comp-button-sizes-extra-large-icon-label-space);
+    --button-outlined-outline-width: var(--md-comp-button-sizes-extra-large-outlined-outline-width);
+    --button-shape-round: var(--md-comp-button-sizes-extra-large-container-shape-round);
+    --button-shape-square: var(--md-comp-button-sizes-extra-large-container-shape-square);
+    --button-pressed-container-shape: var(--md-comp-button-sizes-extra-large-pressed-container-shape);
 }
 
-.yakad-button--text {
-    color: var(--md-sys-color-primary);
-    background-color: transparent;
+.round {
+    --button-container-shape: var(--button-shape-round);
 }
 
-.yakad-button--text:disabled,
-.yakad-button--text[aria-disabled="true"] {
-    color: color-mix(in srgb,
-            var(--md-sys-color-on-surface) 38%,
-            transparent);
-    background-color: transparent;
+.square {
+    --button-container-shape: var(--button-shape-square);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .yakad-button {
+
+    .root,
+    .root::before {
         transition: none;
     }
 }

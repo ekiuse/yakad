@@ -1,87 +1,134 @@
-import React from "react";
+
+import React, { forwardRef } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import "./Button.css";
+import { buttonTokens } from "../Theme/component/Button/tokens";
+import styles from "./button.module.css";
 
-const buttonVariants = cva("yakad-button", {
+const buttonVariants = cva(styles.root, {
     variants: {
         variant: {
-            filled: "yakad-button--filled",
-            tonal: "yakad-button--tonal",
-            outlined: "yakad-button--outlined",
-            elevated: "yakad-button--elevated",
-            text: "yakad-button--text",
+            filled: styles.filled,
+            tonal: styles.tonal,
+            elevated: styles.elevated,
+            outlined: styles.outlined,
+            text: styles.text,
+        },
+        size: {
+            extraSmall: styles.extraSmall,
+            small: styles.small,
+            medium: styles.medium,
+            large: styles.large,
+            extraLarge: styles.extraLarge,
+        },
+        shape: {
+            round: styles.round,
+            square: styles.square,
+        },
+        disabled: {
+            true: styles.disabled,
+            false: null,
         },
     },
     defaultVariants: {
         variant: "filled",
+        size: "medium",
+        shape: buttonTokens.shape.default,
+        disabled: false,
     },
 });
 
-export interface ButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-    asChild?: boolean;
-}
+type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    (
-        {
-            className,
+type NativeButtonProps = Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    "color"
+> &
+    ButtonVariantProps & {
+        asChild?: false;
+    };
+
+type SlottedButtonProps = Omit<
+    React.ComponentPropsWithoutRef<typeof Slot>,
+    "children" | "className"
+> &
+    ButtonVariantProps & {
+        asChild: true;
+        children: React.ReactElement;
+        className?: string;
+        disabled?: boolean;
+    };
+
+export type ButtonProps = NativeButtonProps | SlottedButtonProps;
+
+const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
+    if (props.asChild) {
+        const {
+            asChild,
             variant,
-            asChild = false,
+            size,
+            shape,
             disabled = false,
-            type = "button",
-            onClick,
+            className,
+            children,
             tabIndex,
-            ...restProps
-        },
-        ref
-    ) => {
-        const classNames = buttonVariants({ variant, className });
-
-        if (asChild) {
-            const handleClick: React.MouseEventHandler<HTMLButtonElement> = (
-                event
-            ) => {
-                if (disabled) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    return;
-                }
-
-                onClick?.(event);
-            };
-
-            return (
-                <Slot
-                    ref={ref}
-                    data-slot="button"
-                    data-variant={variant ?? "filled"}
-                    className={classNames}
-                    aria-disabled={disabled || undefined}
-                    tabIndex={disabled ? -1 : tabIndex}
-                    onClick={handleClick}
-                    {...restProps}
-                />
-            );
-        }
+            ...slotProps
+        } = props;
 
         return (
-            <button
+            <Slot
                 ref={ref}
-                type={type}
-                disabled={disabled}
-                data-slot="button"
-                data-variant={variant ?? "filled"}
-                className={classNames}
-                onClick={onClick}
-                {...restProps}
-            />
+                className={[
+                    buttonVariants({
+                        variant,
+                        size,
+                        shape,
+                        disabled,
+                    }),
+                    className,
+                ]
+                    .filter(Boolean)
+                    .join(" ")}
+                aria-disabled={disabled || undefined}
+                tabIndex={disabled ? -1 : tabIndex}
+                {...slotProps}
+            >
+                {children}
+            </Slot>
         );
     }
-);
+
+    const {
+        variant,
+        size,
+        shape,
+        disabled = false,
+        className,
+        type = "button",
+        ...buttonProps
+    } = props;
+
+    return (
+        <button
+            ref={ref as React.Ref<HTMLButtonElement>}
+            type={type}
+            disabled={disabled}
+            className={[
+                buttonVariants({
+                    variant,
+                    size,
+                    shape,
+                    disabled,
+                }),
+                className,
+            ]
+                .filter(Boolean)
+                .join(" ")}
+            {...buttonProps}
+        />
+    );
+});
 
 Button.displayName = "Button";
 
-export { Button, buttonVariants };      
+export { Button, buttonVariants };

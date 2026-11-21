@@ -83,6 +83,27 @@ function resolveShapeToken(shape: string): string {
     return `var(--md-sys-shape-corner-${shape.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)})`;
 }
 
+function resolveElevationToken(level: string): string {
+    return `var(--md-sys-elevation-${level})`;
+}
+
+function resolveTypographyToken(role: string) {
+    const typographyRole = role.replace(
+        /[A-Z]/g,
+        (letter) => `-${letter.toLowerCase()}`
+    );
+
+    const prefix = `--md-sys-typescale-${typographyRole}`;
+
+    return {
+        font: `var(${prefix}-font)`,
+        size: `var(${prefix}-size)`,
+        lineHeight: `var(${prefix}-line-height)`,
+        weight: `var(${prefix}-weight)`,
+        tracking: `var(${prefix}-tracking)`,
+    };
+}
+
 function resolveComponentTokens(
     tokens: Record<string, unknown>
 ): Record<string, unknown> {
@@ -99,6 +120,10 @@ function resolveComponentTokens(
                 return [key, value];
             }
 
+            if (key === "typography") {
+                return [key, resolveTypographyToken(value)];
+            }
+
             if (key === "color" || key.endsWith("Color")) {
                 return [key, resolveColorToken(value)];
             }
@@ -110,6 +135,7 @@ function resolveComponentTokens(
             if (key === "shape") {
                 return [key, resolveShapeToken(value)];
             }
+
             if (key === "font") {
                 const typographyRole = value.replace(
                     /[A-Z]/g,
@@ -130,11 +156,17 @@ function resolveComponentTokens(
             }
 
             if (key === "thickness") {
-                return [key, "var(--md-sys-state-focus-indicator-thickness)"];
+                return [
+                    key,
+                    "var(--md-sys-state-focus-indicator-thickness)",
+                ];
             }
 
             if (key === "offset") {
-                return [key, "var(--md-sys-state-focus-indicator-outer-offset)"];
+                return [
+                    key,
+                    "var(--md-sys-state-focus-indicator-outer-offset)",
+                ];
             }
 
             return [key, value];
@@ -143,43 +175,9 @@ function resolveComponentTokens(
 }
 
 export const checkboxCssTokens = resolveComponentTokens(checkboxTokens);
+
 export const navigationBarCssTokens =
     resolveComponentTokens(navigationBarTokens);
-
-function resolveElevationToken(level: string): string {
-    return `var(--md-sys-elevation-${level})`;
-}
-
-function createAppBarCssTokens(
-    tokens: (typeof appBarTokens)[keyof typeof appBarTokens]
-) {
-    return {
-        ...tokens,
-        container: {
-            ...tokens.container,
-            color: resolveColorToken(tokens.container.color),
-            elevation: resolveElevationToken(tokens.container.elevation),
-        },
-        headline: {
-            ...tokens.headline,
-            color: resolveColorToken(tokens.headline.color),
-        },
-        leadingIcon: {
-            ...tokens.leadingIcon,
-            color: resolveColorToken(tokens.leadingIcon.color),
-        },
-        trailingIcon: {
-            ...tokens.trailingIcon,
-            color: resolveColorToken(tokens.trailingIcon.color),
-        },
-        onScroll: {
-            ...tokens.onScroll,
-            containerElevation: resolveElevationToken(
-                tokens.onScroll.containerElevation
-            ),
-        },
-    };
-}
 
 export const buttonCssTokens = {
     sizes: buttonSizeTokens,
@@ -201,11 +199,12 @@ export const cardCssTokens = {
 } as const;
 
 export const appBarCssTokens = {
-    small: createAppBarCssTokens(appBarTokens.small),
-    centerAligned: createAppBarCssTokens(appBarTokens.centerAligned),
-    medium: createAppBarCssTokens(appBarTokens.medium),
-    large: createAppBarCssTokens(appBarTokens.large),
+    small: resolveComponentTokens(appBarTokens.small),
+    centerAligned: resolveComponentTokens(appBarTokens.centerAligned),
+    medium: resolveComponentTokens(appBarTokens.medium),
+    large: resolveComponentTokens(appBarTokens.large),
 } as const;
+
 export const radioCssTokens = resolveComponentTokens(radioTokens);
 
 export const dividerCssTokens = {
