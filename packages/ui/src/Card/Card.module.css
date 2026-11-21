@@ -1,0 +1,256 @@
+.root {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: var(--card-container-shape);
+    background-color: var(--card-container-color);
+    box-shadow: var(--card-container-elevation);
+    color: var(--card-content-color);
+}
+
+.root::before,
+.root::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    content: "";
+}
+
+.root::before {
+    z-index: 0;
+}
+
+.root::after {
+    z-index: 1;
+    opacity: 0;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.elevated {
+    --card-container-color: var(--md-comp-elevated-card-container-color);
+    --card-container-shape: var(--md-comp-elevated-card-container-shape);
+    --card-container-elevation: var(--md-comp-elevated-card-container-elevation);
+    --card-content-color: var(--md-comp-elevated-card-content-color);
+
+    --card-hover-container-elevation: var(--md-comp-elevated-card-hover-container-elevation);
+    --card-hover-state-layer-color: var(--md-comp-elevated-card-hover-state-layer-color);
+    --card-hover-state-layer-opacity: var(--md-comp-elevated-card-hover-state-layer-opacity);
+
+    --card-focus-container-elevation: var(--md-comp-elevated-card-focus-container-elevation);
+    --card-focus-state-layer-color: var(--md-comp-elevated-card-focus-state-layer-color);
+    --card-focus-state-layer-opacity: var(--md-comp-elevated-card-focus-state-layer-opacity);
+
+    --card-pressed-container-elevation: var(--md-comp-elevated-card-pressed-container-elevation);
+    --card-pressed-state-layer-color: var(--md-comp-elevated-card-pressed-state-layer-color);
+    --card-pressed-state-layer-opacity: var(--md-comp-elevated-card-pressed-state-layer-opacity);
+
+    --card-dragged-container-elevation: var(--md-comp-elevated-card-dragged-container-elevation);
+    --card-dragged-state-layer-color: var(--md-comp-elevated-card-dragged-state-layer-color);
+    --card-dragged-state-layer-opacity: var(--md-comp-elevated-card-dragged-state-layer-opacity);
+
+    --card-focus-indicator-color: var(--md-comp-elevated-card-focus-indicator-color);
+    --card-focus-indicator-thickness: var(--md-comp-elevated-card-focus-indicator-thickness);
+    --card-focus-indicator-offset: var(--md-comp-elevated-card-focus-indicator-offset);
+
+    --card-disabled-container-color: var(--md-comp-elevated-card-disabled-container-color);
+    --card-disabled-container-opacity: var(--md-comp-elevated-card-disabled-container-opacity);
+    --card-disabled-container-elevation: var(--md-comp-elevated-card-disabled-container-elevation);
+    --card-disabled-content-opacity: var(--md-comp-elevated-card-disabled-content-opacity);
+
+    --card-shadow-color: var(--md-comp-elevated-card-container-shadow-color);
+    --card-surface-tint-color: var(--md-comp-elevated-card-container-surface-tint-layer-color);
+}
+
+.filled {
+    --card-container-color: var(--md-comp-filled-card-container-color);
+    --card-container-shape: var(--md-comp-filled-card-container-shape);
+    --card-container-elevation: var(--md-comp-filled-card-container-elevation);
+    --card-content-color: var(--md-comp-filled-card-content-color);
+
+    --card-hover-container-elevation: var(--md-comp-filled-card-hover-container-elevation);
+    --card-hover-state-layer-color: var(--md-comp-filled-card-hover-state-layer-color);
+    --card-hover-state-layer-opacity: var(--md-comp-filled-card-hover-state-layer-opacity);
+
+    --card-focus-container-elevation: var(--md-comp-filled-card-focus-container-elevation);
+    --card-focus-state-layer-color: var(--md-comp-filled-card-focus-state-layer-color);
+    --card-focus-state-layer-opacity: var(--md-comp-filled-card-focus-state-layer-opacity);
+
+    --card-pressed-container-elevation: var(--md-comp-filled-card-pressed-container-elevation);
+    --card-pressed-state-layer-color: var(--md-comp-filled-card-pressed-state-layer-color);
+    --card-pressed-state-layer-opacity: var(--md-comp-filled-card-pressed-state-layer-opacity);
+
+    --card-dragged-container-elevation: var(--md-comp-filled-card-dragged-container-elevation);
+    --card-dragged-state-layer-color: var(--md-comp-filled-card-dragged-state-layer-color);
+    --card-dragged-state-layer-opacity: var(--md-comp-filled-card-dragged-state-layer-opacity);
+
+    --card-focus-indicator-color: var(--md-comp-filled-card-focus-indicator-color);
+    --card-focus-indicator-thickness: var(--md-comp-filled-card-focus-indicator-thickness);
+    --card-focus-indicator-offset: var(--md-comp-filled-card-focus-indicator-offset);
+
+    --card-disabled-container-color: var(--md-comp-filled-card-disabled-container-color);
+    --card-disabled-container-opacity: var(--md-comp-filled-card-disabled-container-opacity);
+    --card-disabled-container-elevation: var(--md-comp-filled-card-disabled-container-elevation);
+    --card-disabled-content-opacity: var(--md-comp-filled-card-disabled-content-opacity);
+
+    --card-icon-color: var(--md-comp-filled-card-icon-color);
+    --card-icon-size: var(--md-comp-filled-card-icon-size);
+
+    --card-shadow-color: var(--md-comp-filled-card-container-shadow-color);
+    --card-surface-tint-color: var(--md-comp-filled-card-container-surface-tint-layer-color);
+}
+
+.outlined {
+    --card-container-color: var(--md-comp-outlined-card-container-color);
+    --card-container-shape: var(--md-comp-outlined-card-container-shape);
+    --card-container-elevation: var(--md-comp-outlined-card-container-elevation);
+    --card-content-color: var(--md-comp-outlined-card-content-color);
+
+    --card-hover-container-elevation: var(--md-comp-outlined-card-hover-container-elevation);
+    --card-hover-state-layer-color: var(--md-comp-outlined-card-hover-state-layer-color);
+    --card-hover-state-layer-opacity: var(--md-comp-outlined-card-hover-state-layer-opacity);
+
+    --card-focus-container-elevation: var(--md-comp-outlined-card-focus-container-elevation);
+    --card-focus-state-layer-color: var(--md-comp-outlined-card-focus-state-layer-color);
+    --card-focus-state-layer-opacity: var(--md-comp-outlined-card-focus-state-layer-opacity);
+
+    --card-pressed-container-elevation: var(--md-comp-outlined-card-pressed-container-elevation);
+    --card-pressed-state-layer-color: var(--md-comp-outlined-card-pressed-state-layer-color);
+    --card-pressed-state-layer-opacity: var(--md-comp-outlined-card-pressed-state-layer-opacity);
+
+    --card-dragged-container-elevation: var(--md-comp-outlined-card-dragged-container-elevation);
+    --card-dragged-state-layer-color: var(--md-comp-outlined-card-dragged-state-layer-color);
+    --card-dragged-state-layer-opacity: var(--md-comp-outlined-card-dragged-state-layer-opacity);
+
+    --card-focus-indicator-color: var(--md-comp-outlined-card-focus-indicator-color);
+    --card-focus-indicator-thickness: var(--md-comp-outlined-card-focus-indicator-thickness);
+    --card-focus-indicator-offset: var(--md-comp-outlined-card-focus-indicator-offset);
+
+    --card-disabled-content-opacity: var(--md-comp-outlined-card-disabled-content-opacity);
+    --card-disabled-outline-color: var(--md-comp-outlined-card-disabled-outline-color);
+    --card-disabled-outline-opacity: var(--md-comp-outlined-card-disabled-outline-opacity);
+
+    --card-outline-color: var(--md-comp-outlined-card-outline-color);
+    --card-outline-width: var(--md-comp-outlined-card-outline-width);
+
+    --card-hover-outline-color: var(--md-comp-outlined-card-hover-outline-color);
+    --card-focus-outline-color: var(--md-comp-outlined-card-focus-outline-color);
+    --card-pressed-outline-color: var(--md-comp-outlined-card-pressed-outline-color);
+    --card-dragged-outline-color: var(--md-comp-outlined-card-dragged-outline-color);
+
+    --card-shadow-color: var(--md-comp-outlined-card-container-shadow-color);
+    --card-surface-tint-color: var(--md-comp-outlined-card-container-surface-tint-layer-color);
+
+    border: calc(var(--card-outline-width) * 1px) solid var(--card-outline-color);
+}
+
+.interactive {
+    cursor: pointer;
+}
+
+.interactive:hover:not(.disabled):not(.dragged) {
+    box-shadow: var(--card-hover-container-elevation);
+}
+
+.interactive:hover:not(.disabled):not(.dragged)::after {
+    background-color: var(--card-hover-state-layer-color);
+    opacity: var(--card-hover-state-layer-opacity);
+}
+
+.interactive:active:not(.disabled):not(.dragged) {
+    box-shadow: var(--card-pressed-container-elevation);
+}
+
+.interactive:active:not(.disabled):not(.dragged)::after {
+    background-color: var(--card-pressed-state-layer-color);
+    opacity: var(--card-pressed-state-layer-opacity);
+}
+
+.root:focus-within:not(.disabled) {
+    box-shadow: var(--card-focus-container-elevation);
+    outline: var(--card-focus-indicator-thickness) solid var(--card-focus-indicator-color);
+    outline-offset: var(--card-focus-indicator-offset);
+}
+
+.root:focus-within:not(.disabled)::after {
+    background-color: var(--card-focus-state-layer-color);
+    opacity: var(--card-focus-state-layer-opacity);
+}
+
+.outlined:focus-within:not(.disabled) {
+    border-color: var(--card-focus-outline-color);
+}
+
+.dragged:not(.disabled) {
+    box-shadow: var(--card-dragged-container-elevation);
+}
+
+.dragged:not(.disabled)::after {
+    background-color: var(--card-dragged-state-layer-color);
+    opacity: var(--card-dragged-state-layer-opacity);
+}
+
+.outlined.dragged:not(.disabled) {
+    border-color: var(--card-dragged-outline-color);
+}
+
+.outlined.interactive:hover:not(.disabled):not(.dragged) {
+    border-color: var(--card-hover-outline-color);
+}
+
+.outlined.interactive:active:not(.disabled):not(.dragged) {
+    border-color: var(--card-pressed-outline-color);
+}
+
+.elevated.disabled,
+.filled.disabled {
+    background-color: transparent;
+    box-shadow: var(--card-disabled-container-elevation);
+}
+
+.elevated.disabled::before,
+.filled.disabled::before {
+    background-color: var(--card-disabled-container-color);
+    opacity: var(--card-disabled-container-opacity);
+}
+
+.elevated.disabled .content,
+.filled.disabled .content,
+.outlined.disabled .content {
+    opacity: var(--card-disabled-content-opacity);
+}
+
+.outlined.disabled {
+    border-color: transparent;
+}
+
+.outlined.disabled::before {
+    border: calc(var(--md-comp-outlined-card-outline-width) * 1px) solid var(--card-disabled-outline-color);
+    opacity: var(--card-disabled-outline-opacity);
+}
+
+.disabled::after {
+    display: none;
+}
+
+.icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--card-icon-color, currentColor);
+}
+
+.icon :global(svg) {
+    width: calc(var(--card-icon-size, 24) * 1px);
+    height: calc(var(--card-icon-size, 24) * 1px);
+}
