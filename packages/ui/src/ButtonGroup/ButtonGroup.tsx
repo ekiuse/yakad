@@ -1,8 +1,9 @@
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Divider } from "../Divider/Divider";
 
-import { Separator } from "../Separator/Separator";
+
 
 const buttonGroupVariants = cva(
     "flex w-fit items-stretch [&>*]:focus-visible:z-10",
@@ -73,7 +74,7 @@ function ButtonGroupSeparator({
     className,
     orientation = "vertical",
     ...props
-}: React.ComponentProps<typeof Separator>) {
+}: React.ComponentProps<typeof Divider>) {
     const buttonGroupSeparatorClassName = [
         "bg-border relative !m-0 self-stretch",
         "data-[orientation=vertical]:h-auto",
@@ -83,7 +84,7 @@ function ButtonGroupSeparator({
         .join(" ");
 
     return (
-        <Separator
+        <Divider
             data-slot="button-group-separator"
             orientation={orientation}
             className={buttonGroupSeparatorClassName}

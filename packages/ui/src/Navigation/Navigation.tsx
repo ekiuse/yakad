@@ -2,7 +2,6 @@
 import {
     forwardRef,
     type ComponentPropsWithoutRef,
-    type ElementRef,
     type ReactNode,
 } from "react";
 import { cva, type VariantProps } from "class-variance-authority";

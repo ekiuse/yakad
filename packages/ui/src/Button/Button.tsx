@@ -3,7 +3,7 @@ import React, { forwardRef } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { buttonTokens } from "../Theme/component/Button/tokens";
-import styles from "./button.module.css";
+import styles from "./Button.module.css";
 
 const buttonVariants = cva(styles.root, {
     variants: {
@@ -74,6 +74,8 @@ const Button = forwardRef<HTMLElement, ButtonProps>((props, ref) => {
             tabIndex,
             ...slotProps
         } = props;
+
+        void asChild;
 
         return (
             <Slot
